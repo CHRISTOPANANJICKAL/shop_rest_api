@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApplication1.interfaces;
+using WebApplication1.middlewares;
 using WebApplication1.Models;
 using WebApplication1.Models.common;
 using WebApplication1.repository;
@@ -19,7 +20,7 @@ builder.Services.AddDbContext<ItemContext>(options =>
 builder.Services.AddScoped<IItemRepository, ItemRepository>();
 
 var app = builder.Build();
-
+app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
 
 app.MapControllers();
 

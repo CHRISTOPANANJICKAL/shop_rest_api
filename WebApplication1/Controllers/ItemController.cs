@@ -13,8 +13,8 @@ public class ItemController(IItemRepository repository) : ControllerBase
     [HttpPost]
     public ApiResponse<ItemModel?> AddItem([FromBody] ItemModel item)
     {
-        var dbResult = repository.AddItem(item);
-        return new ApiResponse<ItemModel?>(result: dbResult);
+       var dbResult = repository.AddItem(item);
+       return new ApiResponse<ItemModel?>(result: dbResult);
     }
 
 

@@ -10,7 +10,6 @@ public class DataBaseResult<T>(T? data, bool success, string? message, int statu
 
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public List<string>? Errors { get; set; } = errors;
-
     public string Message { get; set; } = message ?? "";
     public int StatusCode { get; set; } = statusCode;
     public bool Success { get; set; } = success;
