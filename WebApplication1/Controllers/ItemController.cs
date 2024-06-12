@@ -1,68 +1,73 @@
 using Microsoft.AspNetCore.Mvc;
-using WebApplication1.Database;
+using WebApplication1.interfaces;
 using WebApplication1.Models;
+using WebApplication1.Models.common;
 using WebApplication1.utils;
 
 namespace WebApplication1.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class ItemController : ControllerBase
+public class ItemController(IItemRepository repository) : ControllerBase
 {
     [HttpPost]
-    public ApiResponse AddItem([FromBody] ItemModel item)
+    public ApiResponse<ItemModel?> AddItem([FromBody] ItemModel item)
     {
-        var result = ItemsDatabase.AddItem(item);
-        return result.Success
-            ? new ApiResponse(new SuccessResponse(statusCode: 201, message: result.Message))
-            : new ApiResponse(new ErrorResponse(statusCode: 400, message: result.Message));
+        var dbResult = repository.AddItem(item);
+        return new ApiResponse<ItemModel?>(result: dbResult);
     }
 
 
     [HttpGet("all")]
-    public ApiResponse GetAllItems()
+    public ApiResponse<List<ItemModel>> GetAllItems()
     {
-        var result = ItemsDatabase.GetAllItems();
-        return result.Success
-            ? new ApiResponse(new SuccessResponse(200, message: result.Message, data: result.Data))
-            : new ApiResponse(new ErrorResponse(400, message: result.Message));
+        var dbResult = repository.GetAllItems();
+        return new ApiResponse<List<ItemModel>>(dbResult);
     }
 
     [HttpGet("{id}")]
-    public ApiResponse GetItem(string id)
+    public ApiResponse<ItemModel?> GetItem(string id)
     {
         var parsedId = Utils.ValidId(id);
 
         if (parsedId == null)
-            return new ApiResponse(new ErrorResponse(400, message: "Invalid id"));
+            return new ApiResponse<ItemModel?>(result: new DataBaseResult<ItemModel?>(data: null, success: false,
+                message: "Invalid Id",
+                statusCode: 400
+            ));
 
-        var result = ItemsDatabase.GetItem(parsedId.Value);
-        return result.Success
-            ? new ApiResponse(new SuccessResponse(200, message: result.Message, data: result.Data))
-            : new ApiResponse(new ErrorResponse(400, message: result.Message));
+
+        var dbResult = repository.GetItem(parsedId.Value);
+        return new ApiResponse<ItemModel?>(result: dbResult);
     }
 
     [HttpDelete("{id}")]
-    public ApiResponse DeleteItem(string id)
+    public ApiResponse<ItemModel?> DeleteItem(string id)
     {
         var parsedId = Utils.ValidId(id);
-        if (parsedId == null) return new ApiResponse(new ErrorResponse(400, message: "Invalid id"));
 
-        var result = ItemsDatabase.DeleteItem(parsedId.Value);
-        return result.Success
-            ? new ApiResponse(new SuccessResponse(200, message: result.Message))
-            : new ApiResponse(new ErrorResponse(400, message: result.Message));
+        if (parsedId == null)
+            return new ApiResponse<ItemModel?>(result: new DataBaseResult<ItemModel?>(data: null, success: false,
+                message: "Invalid Id",
+                statusCode: 400
+            ));
+
+
+        var dbResult = repository.DeleteItem(parsedId.Value);
+        return new ApiResponse<ItemModel?>(result: dbResult);
     }
 
     [HttpPatch("{id}")]
-    public ApiResponse UpdateItem(String id, ItemModel item)
+    public ApiResponse<ItemModel?> UpdateItem(String id, ItemModel item)
     {
         var parsedId = Utils.ValidId(id);
-        if (parsedId == null) return new ApiResponse(new ErrorResponse(400, message: "Invalid id"));
 
-        var result = ItemsDatabase.UpdateItem(parsedId.Value, item);
-        return result.Success
-            ? new ApiResponse(new SuccessResponse(200, message: result.Message))
-            : new ApiResponse(new ErrorResponse(400, message: result.Message));
+        if (parsedId == null)
+            return new ApiResponse<ItemModel?>(result: new DataBaseResult<ItemModel?>(data: null, success: false,
+                message: "Invalid Id",
+                statusCode: 400
+            ));
+        var dbResult = repository.UpdateItem(parsedId.Value, item);
+        return new ApiResponse<ItemModel?>(result: dbResult);
     }
 }
