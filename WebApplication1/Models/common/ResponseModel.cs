@@ -7,7 +7,8 @@ public class ApiResponse<T> : ObjectResult
     public ApiResponse(DataBaseResult<T> result) : base(result)
     {
         StatusCode = result.StatusCode;
-    }
+        Console.Write($"Writing status code {result.StatusCode}");
+}
     
     
          public static IActionResult GenerateErrorResponseModel(ActionContext context)
