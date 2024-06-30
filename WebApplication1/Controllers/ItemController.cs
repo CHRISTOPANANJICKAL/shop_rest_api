@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApplication1.interfaces;
 using WebApplication1.Models;
@@ -6,6 +7,7 @@ using WebApplication1.utils;
 
 namespace WebApplication1.Controllers;
 
+[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class ItemController(IItemRepository repository) : ControllerBase
@@ -17,7 +19,7 @@ public class ItemController(IItemRepository repository) : ControllerBase
        return new ApiResponse<ItemModel?>(result: dbResult);
     }
 
-
+    [AllowAnonymous]
     [HttpGet("all")]
     public ApiResponse<List<ItemModel>> GetAllItems()
     {

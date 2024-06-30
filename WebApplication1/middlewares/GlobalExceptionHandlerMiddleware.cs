@@ -6,7 +6,7 @@ namespace WebApplication1.middlewares;
 
 public class GlobalExceptionHandlerMiddleware(RequestDelegate next, ILogger<GlobalExceptionHandlerMiddleware> logger)
 {
-    private static readonly JsonSerializerOptions JsonOptions = new JsonSerializerOptions
+    private static readonly JsonSerializerOptions JsonOptions = new()
     {
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
         WriteIndented = true
@@ -19,11 +19,16 @@ public class GlobalExceptionHandlerMiddleware(RequestDelegate next, ILogger<Glob
         try
         {
             await next(context);
-            if (context.Response.StatusCode == (int)HttpStatusCode.MethodNotAllowed)
+            switch (context.Response.StatusCode)
             {
-                exceptionMessage = $"{context.Request.Method} is not allowed";
-                statusCode = (int)HttpStatusCode.MethodNotAllowed;
-                throw new Exception();
+                case (int)HttpStatusCode.MethodNotAllowed:
+                    exceptionMessage = $"{context.Request.Method} is not allowed";
+                    statusCode = (int)HttpStatusCode.MethodNotAllowed;
+                    throw new Exception();
+                case (int)HttpStatusCode.Unauthorized:
+                    exceptionMessage = $"Unauthorized";
+                    statusCode = context.Response.StatusCode;
+                    throw new Exception();
             }
         }
         catch (Exception ex)

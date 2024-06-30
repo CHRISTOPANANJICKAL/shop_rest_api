@@ -4,7 +4,7 @@ using WebApplication1.Models.common;
 
 namespace WebApplication1.repository;
 
-public class ItemRepository(ItemContext context) : IItemRepository
+public class ItemRepository(AppDbContext context) : IItemRepository
 {
     public DataBaseResult<List<ItemModel>> GetAllItems()
     {

@@ -8,6 +8,10 @@ E:\asp.net\WebApplication1\WebApplication1\bin\Debug\net8.0\WebApplication1.pdb
 E:\asp.net\WebApplication1\WebApplication1\bin\Debug\net8.0\Azure.Core.dll
 E:\asp.net\WebApplication1\WebApplication1\bin\Debug\net8.0\Azure.Identity.dll
 E:\asp.net\WebApplication1\WebApplication1\bin\Debug\net8.0\Humanizer.dll
+E:\asp.net\WebApplication1\WebApplication1\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+E:\asp.net\WebApplication1\WebApplication1\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+E:\asp.net\WebApplication1\WebApplication1\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+E:\asp.net\WebApplication1\WebApplication1\bin\Debug\net8.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
 E:\asp.net\WebApplication1\WebApplication1\bin\Debug\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
 E:\asp.net\WebApplication1\WebApplication1\bin\Debug\net8.0\Microsoft.CodeAnalysis.dll
 E:\asp.net\WebApplication1\WebApplication1\bin\Debug\net8.0\Microsoft.CodeAnalysis.CSharp.dll
@@ -25,6 +29,8 @@ E:\asp.net\WebApplication1\WebApplication1\bin\Debug\net8.0\Microsoft.Extensions
 E:\asp.net\WebApplication1\WebApplication1\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.dll
 E:\asp.net\WebApplication1\WebApplication1\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
 E:\asp.net\WebApplication1\WebApplication1\bin\Debug\net8.0\Microsoft.Extensions.DependencyModel.dll
+E:\asp.net\WebApplication1\WebApplication1\bin\Debug\net8.0\Microsoft.Extensions.Identity.Core.dll
+E:\asp.net\WebApplication1\WebApplication1\bin\Debug\net8.0\Microsoft.Extensions.Identity.Stores.dll
 E:\asp.net\WebApplication1\WebApplication1\bin\Debug\net8.0\Microsoft.Extensions.Logging.dll
 E:\asp.net\WebApplication1\WebApplication1\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
 E:\asp.net\WebApplication1\WebApplication1\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
