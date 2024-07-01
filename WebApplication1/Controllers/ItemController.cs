@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApplication1.interfaces;
-using WebApplication1.Models;
 using WebApplication1.Models.common;
+using WebApplication1.Models.Item;
 using WebApplication1.utils;
 
 namespace WebApplication1.Controllers;
@@ -15,8 +15,8 @@ public class ItemController(IItemRepository repository) : ControllerBase
     [HttpPost]
     public ApiResponse<ItemModel?> AddItem([FromBody] ItemModel item)
     {
-       var dbResult = repository.AddItem(item);
-       return new ApiResponse<ItemModel?>(result: dbResult);
+        var dbResult = repository.AddItem(item);
+        return new ApiResponse<ItemModel?>(result: dbResult);
     }
 
     [AllowAnonymous]
@@ -30,6 +30,10 @@ public class ItemController(IItemRepository repository) : ControllerBase
     [HttpGet("{id}")]
     public ApiResponse<ItemModel?> GetItem(string id)
     {
+        var name = User as CustomClaimsPrincipal;
+        Console.WriteLine(name.CustomUser.FirstName);
+
+
         var parsedId = Utils.ValidId(id);
 
         if (parsedId == null)

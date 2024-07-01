@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace WebApplication1.Models;
+namespace WebApplication1.Models.Item;
 
 public class ItemModel
 {
@@ -11,11 +11,9 @@ public class ItemModel
     [Required] public DateTime UpdatedAt { get; set; }
 
 
-    public ItemModel UpdateFrom(ItemModel item)
+    public void UpdateFrom(ItemModel item)
     {
         ItemName = item.ItemName;
         Description = item.Description;
-
-        return this;
     }
 }

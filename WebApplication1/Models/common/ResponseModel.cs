@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace WebApplication1.Models.common;
 
@@ -8,7 +9,7 @@ public class ApiResponse<T> : ObjectResult
     {
         StatusCode = result.StatusCode;
     }
-    
+
     public static IActionResult GenerateErrorResponseModel(ActionContext context)
     {
         List<string> apiError = [];
@@ -20,7 +21,7 @@ public class ApiResponse<T> : ObjectResult
             statusCode: 400,
             data: default,
             errors: apiError,
-            message: "Bad request",
+            message: apiError.ToList().IsNullOrEmpty() ? "Bad request" : apiError.First(),
             success: false
         ));
     }

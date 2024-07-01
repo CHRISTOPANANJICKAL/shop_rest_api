@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
-namespace WebApplication1.Models.UserModel;
+
+namespace WebApplication1.Models.User;
 
 public class UserModel : IdentityUser
 {

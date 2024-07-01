@@ -1,48 +1,26 @@
 using System.Text;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using WebApplication1.Helpers;
 using WebApplication1.interfaces;
 using WebApplication1.middlewares;
 using WebApplication1.Models;
 using WebApplication1.Models.common;
-using WebApplication1.Models.UserModel;
 using WebApplication1.repository;
+using WebApplication1.utils;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
 
-
 // ------------------------------------------------ AUTH START -----------------------------------------
-builder.Services.AddIdentity<UserModel, IdentityRole>()
-    .AddEntityFrameworkStores<AppDbContext>()
-    .AddDefaultTokenProviders();
-
-builder.Services.AddAuthentication(options =>
-    {
-        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;})
-    .AddJwtBearer(
-         options =>
-     {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            ValidIssuer = builder.Configuration["Jwt:Issuer"],
-            ValidAudience = builder.Configuration["Jwt:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"] ?? ""))
-        };
-    }
-    );
 
 
+builder.Services.AddAuthentication("Custom")
+    .AddScheme<AuthenticationSchemeOptions, CustomAuthenticationHandler>("Custom", null);
 
 builder.Services.AddAuthorization();
 
@@ -59,6 +37,7 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 });
 
 builder.Services.AddScoped<IItemRepository, ItemRepository>();
+builder.Services.AddSingleton<JwtHelper>();
 
 
 var app = builder.Build();

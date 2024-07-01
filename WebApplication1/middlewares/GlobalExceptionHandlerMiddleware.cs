@@ -33,7 +33,11 @@ public class GlobalExceptionHandlerMiddleware(RequestDelegate next, ILogger<Glob
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "An unhandled exception has occurred.");
+            if (context.Response.StatusCode != (int)HttpStatusCode.Unauthorized)
+            {
+                logger.LogError(ex, "An unhandled exception has occurred.");
+            }
+
             await HandleExceptionAsync(context, exceptionMessage, statusCode);
         }
     }
@@ -51,8 +55,8 @@ public class GlobalExceptionHandlerMiddleware(RequestDelegate next, ILogger<Glob
             statusCode: statusCode ?? 500
         ));
         context.Response.StatusCode = statusCode ?? 500;
-        
-        var jsonResponse = JsonSerializer.Serialize(errorResponse.Value,JsonOptions);
+
+        var jsonResponse = JsonSerializer.Serialize(errorResponse.Value, JsonOptions);
 
         return context.Response.WriteAsync(jsonResponse);
     }
